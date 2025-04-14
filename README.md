@@ -1,1 +1,220 @@
-# elsword_stat_value_added
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>스탯 점수 계산기</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #fff;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-size: 26px;
+      color: #2c3e50;
+    }
+
+    .category {
+      margin-bottom: 18px;
+    }
+
+    label {
+      font-size: 16px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #3498db;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 0 10px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>스탯 점수 계산기</h2>
+    <form id="scoreForm">
+      <div id="categoryContainer"></div>
+      <div class="btn-group">
+        <button type="submit">점수 계산</button>
+        <button type="button" id="resetBtn">초기화</button>
+      </div>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const categories = [
+      {
+        label: "강수 물마공%",
+        options: { "1.5%": 9.5, "1.4%": 9, "1.3%": 8, "1.2%": 7.5, "1.1%": 7, "1.0%": 6.5, "0.9%": 6, "0.8%": 5 }
+      },
+      {
+        label: "강수 물마렙",
+        options: { "1.5": 7.5, "1.4": 7, "1.3": 6.5, "1.2": 6, "1.1": 5.5, "1.0": 5, "0.9": 4.5, "0.8": 4 }
+      },
+      {
+        label: "강수 모스뎀",
+        options: { "1.5%": 8.5, "1.4%": 8, "1.3%": 7.5, "1.2%": 7, "1.1%": 6.5, "1.0%": 5.5, "0.9%": 5, "0.8%": 4.5 }
+      },
+      {
+        label: "강수 크뎀",
+        options: { "1.5%": 7.5, "1.4%": 7, "1.3%": 6.5, "1.2%": 6, "1.1%": 5.5, "1.0%": 5, "0.9%": 4.5, "0.8%": 4 }
+      },
+      {
+        label: "물마공%",
+        options: { "13%": 7, "12%": 6.5, "11%": 6, "10%": 5.5, "9%": 4.5, "8%": 4, "7%": 3.5, "6%": 3 }
+      },
+      {
+        label: "물마렙",
+        options: { "13": 5.5, "12": 5, "11": 4.5, "10": 4, "9": 3.5, "8": 3, "7": 2.5, "6": 2 }
+      },
+      {
+        label: "타피",
+        options: { "12%": 8, "11%": 7, "10%": 6.5, "9%": 6, "8%": 5, "7%": 4.5, "6%": 4 }
+      },
+      {
+        label: "추피",
+        options: { "12%": 8, "11%": 7, "10%": 6.5, "9%": 6, "8%": 5, "7%": 4.5, "6%": 4 }
+      },
+      {
+        label: "강렬/초뎀",
+        options: { "13%": 5.5, "12%": 5, "11%": 4.5, "10%": 4, "9%": 3.5, "8%": 3 }
+      },
+      {
+        label: "모스뎀",
+        options: { "13%": 6.5, "12%": 6, "11%": 5, "10%": 4.5, "9%": 4.5, "8%": 4 }
+      },
+      {
+        label: "크뎀",
+        options: { "13%": 5.5, "12%": 5, "11%": 4.5, "10%": 4, "9%": 3.5, "8%": 3.5, "7%": 3, "6%": 2.5 }
+      },
+      {
+        label: "보뎀",
+        options: { "15%": 5, "14%": 4.5, "13%": 4.5, "12%": 4, "11%": 4, "10%": 3.5, "9%": 3, "8%": 2.5 }
+      }
+    ];
+
+    const container = document.getElementById('categoryContainer');
+    const form = document.getElementById('scoreForm');
+    const resultDiv = document.getElementById('result');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const selects = [];
+
+    categories.forEach((cat) => {
+      const div = document.createElement('div');
+      div.className = 'category';
+
+      const label = document.createElement('label');
+      label.textContent = cat.label;
+      div.appendChild(label);
+
+      const select = document.createElement('select');
+      select.setAttribute('data-category', '');
+
+      const defaultOption = document.createElement('option');
+      defaultOption.text = '선택';
+      defaultOption.value = "0";
+      select.appendChild(defaultOption);
+
+      // 역순 정렬 여부 판단
+      const isAscending = Object.keys(cat.options)[0] < Object.keys(cat.options)[1];
+      const entries = Object.entries(cat.options);
+      const optionsSorted = isAscending ? entries.reverse() : entries;
+
+      optionsSorted.forEach(([text, val]) => {
+        const option = document.createElement('option');
+        option.value = val;
+        option.textContent = text;
+        select.appendChild(option);
+      });
+
+      div.appendChild(select);
+      container.appendChild(div);
+      selects.push(select);
+    });
+
+    selects.forEach(select => {
+      select.addEventListener('change', () => {
+        const selectedCount = selects.filter(s => s.value !== "0").length;
+        if (selectedCount > 4) {
+          alert('최대 4개의 항목만 선택할 수 있습니다.');
+          select.value = "0";
+        }
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let totalScore = 0;
+      selects.forEach(select => {
+        totalScore += parseFloat(select.value);
+      });
+
+      let message = '';
+      if (totalScore <= 18) message = '돌려';
+      else if (totalScore <= 21) message = '임시용';
+      else if (totalScore <= 24) message = '쓸만함';
+      else if (totalScore <= 29) message = '현실적인 엔드(여기서부턴 모듈작)';
+      else message = '동"신"이가 내린 무기';
+
+      resultDiv.textContent = `총 점수: ${totalScore.toFixed(1)}점 → ${message}`;
+    });
+
+    resetBtn.addEventListener('click', () => {
+      selects.forEach(select => {
+        select.value = "0";
+      });
+      resultDiv.textContent = '';
+    });
+  </script>
+</body>
+</html>
