@@ -142,13 +142,11 @@
       <!-- 업데이트 섹션 -->
       <div class="update-section">
         <h3>업데이트 내용</h3>
-
         <button type="button" class="accordion-button" onclick="toggleAccordion('update-250526')">25.05.26</button>
         <ul id="update-250526" class="accordion-content">
           <li>디자인 개선</li>
           <li>점수 100점제 완료</li>
         </ul>
-
       </div>
 
       <!-- 스탯 선택 영역 -->
@@ -179,7 +177,16 @@
           <label for="stat11">크뎀</label>
           <select id="stat11"><option value="0">선택</option><option value="5.5">13%</option><option value="5">12%</option><option value="4.5">11%</option><option value="4">10%</option><option value="3.5">9%</option><option value="3">8%</option></select>
           <label for="stat12">보뎀</label>
-          <select id="stat12"><option value="0">선택</option><option value="4">13%</option><option value="3.5">12%</option><option value="3">11%</option><option value="2.5">10%</option><option value="2">9%</option></select>
+          <select id="stat12">
+            <option value="0">선택</option>
+            <option value="5">15%</option>
+            <option value="4.5">14%</option>
+            <option value="4">13%</option>
+            <option value="3.5">12%</option>
+            <option value="3">11%</option>
+            <option value="2.5">10%</option>
+            <option value="2">9%</option>
+          </select>
         </div>
       </div>
     </div>
@@ -216,7 +223,6 @@
   }
 
   document.getElementById("calcBtn").addEventListener("click", () => {
-    // 선택된 옵션 개수 세기 (0이 아닌 값)
     let selectedCount = 0;
     for (let i = 1; i <= 12; i++) {
       if (document.getElementById(`stat${i}`).value !== "0") {
@@ -226,7 +232,7 @@
 
     if (selectedCount > 4) {
       alert("변환옵션은 최대 4개입니다.");
-      return; // 계산 중단
+      return;
     }
 
     const score = calculateScore();
