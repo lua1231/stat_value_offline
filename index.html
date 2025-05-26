@@ -142,11 +142,13 @@
       <!-- 업데이트 섹션 -->
       <div class="update-section">
         <h3>업데이트 내용</h3>
+
         <button type="button" class="accordion-button" onclick="toggleAccordion('update-250526')">25.05.26</button>
         <ul id="update-250526" class="accordion-content">
           <li>디자인 개선</li>
           <li>점수 100점제 완료</li>
         </ul>
+
       </div>
 
       <!-- 스탯 선택 영역 -->
@@ -177,16 +179,7 @@
           <label for="stat11">크뎀</label>
           <select id="stat11"><option value="0">선택</option><option value="5.5">13%</option><option value="5">12%</option><option value="4.5">11%</option><option value="4">10%</option><option value="3.5">9%</option><option value="3">8%</option></select>
           <label for="stat12">보뎀</label>
-          <select id="stat12">
-            <option value="0">선택</option>
-            <option value="5">15%</option>
-            <option value="4.5">14%</option>
-            <option value="4">13%</option>
-            <option value="3.5">12%</option>
-            <option value="3">11%</option>
-            <option value="2.5">10%</option>
-            <option value="2">9%</option>
-          </select>
+          <select id="stat12"><option value="0">선택</option><option value="4">15%</option><option value="3.5">14%</option><option value="3">13%</option><option value="2.5">12%</option><option value="2">11%</option><option value="1.5">10%</option></select>
         </div>
       </div>
     </div>
@@ -235,8 +228,10 @@
       return;
     }
 
-    const score = calculateScore();
-    const score100 = Math.round((score / 33) * 100);
+    const rawScore = calculateScore();
+    let score100 = Math.round((rawScore / 33) * 100);
+    if (score100 > 100) score100 = 100;
+
     const resultText = getEvaluation(score100);
     document.getElementById("result").textContent = resultText;
   });
