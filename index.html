@@ -130,45 +130,6 @@
       text-align: center;
       white-space: pre-line;
     }
-
-    /* 모바일 대응 반응형 */
-    @media (max-width: 600px) {
-      body {
-        padding: 20px;
-      }
-      .container {
-        width: 100%;
-        padding: 20px;
-      }
-      .flex-row {
-        flex-direction: column;
-      }
-      .update-section {
-        border-right: none;
-        border-bottom: 1px solid #333;
-        padding-right: 0;
-        padding-bottom: 15px;
-        margin-bottom: 20px;
-      }
-      .form-section {
-        flex-direction: column;
-        gap: 15px;
-      }
-      .column {
-        flex: none;
-        width: 100%;
-      }
-      select {
-        font-size: 14px;
-      }
-      button {
-        width: 100%;
-      }
-      .btn-row {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -186,10 +147,7 @@
         <ul id="update-250526" class="accordion-content">
           <li>디자인 개선</li>
           <li>점수 100점제 완료</li>
-          <li>모바일 화면 개선</li>
         </ul>
-
-        
 
       </div>
 
@@ -253,4 +211,37 @@
   }
 
   function toggleAccordion(id) {
-    const content = document.getElement
+    const content = document.getElementById(id);
+    content.style.display = content.style.display === "block" ? "none" : "block";
+  }
+
+  document.getElementById("calcBtn").addEventListener("click", () => {
+    // 선택된 옵션 개수 세기 (0이 아닌 값)
+    let selectedCount = 0;
+    for (let i = 1; i <= 12; i++) {
+      if (document.getElementById(`stat${i}`).value !== "0") {
+        selectedCount++;
+      }
+    }
+
+    if (selectedCount > 4) {
+      alert("변환옵션은 최대 4개입니다.");
+      return; // 계산 중단
+    }
+
+    const score = calculateScore();
+    const score100 = Math.round((score / 33) * 100);
+    const resultText = getEvaluation(score100);
+    document.getElementById("result").textContent = resultText;
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    for (let i = 1; i <= 12; i++) {
+      document.getElementById(`stat${i}`).value = "0";
+    }
+    document.getElementById("result").textContent = "";
+  });
+</script>
+
+</body>
+</html>
