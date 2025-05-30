@@ -16,7 +16,7 @@
       background-color: #1f1f1f;
       padding: 30px 40px;
       border-radius: 10px;
-      width: 760px;
+      width: 1100px;
       box-sizing: border-box;
     }
     h2 {
@@ -130,6 +130,35 @@
       text-align: center;
       white-space: pre-line;
     }
+    .info-section {
+      flex-basis: 180px;
+      padding-left: 15px;
+      border-left: 1px solid #333;
+    }
+    .info-section h3 {
+      font-size: 16px;
+      color: #00bfff;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .info-section ul {
+      padding-left: 18px;
+    }
+    .info-section li {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 6px;
+    }
+
+/* 기존 스타일 아래에 추가 */
+.highlight-red {
+  color: #e74c3c; /* 진한 빨강 */
+  font-weight: bold;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -152,6 +181,11 @@
           <li>초월,강렬 점수 살짝 조정</li>
         </ul>
 
+        <button type="button" class="accordion-button" onclick="toggleAccordion('update-250530')">25.05.30</button>
+        <ul id="update-250530" class="accordion-content">
+          <li>물마 레벨관련 점수 구체화</li>
+ 	  <li>오른쪽 섹션 정보 추가</li>	
+        </ul>
       </div>
 
       <!-- 스탯 선택 영역 -->
@@ -160,7 +194,7 @@
           <label for="stat1">강수 물마공%</label>
           <select id="stat1"><option value="0">선택</option><option value="9.5">1.5%</option><option value="9">1.4%</option><option value="8">1.3%</option><option value="7.5">1.2%</option><option value="7">1.1%</option><option value="6.5">1.0%</option><option value="6">0.9%</option><option value="5">0.8%</option></select>
           <label for="stat2">강수 물마렙</label>
-          <select id="stat2"><option value="0">선택</option><option value="7.5">1.5</option><option value="7">1.4</option><option value="6.5">1.3</option><option value="6">1.2</option><option value="5.5">1.1</option><option value="5">1.0</option><option value="4.5">0.9</option><option value="4">0.8</option></select>
+          <select id="stat2"><option value="0">선택</option><option value="7.25">1.5</option><option value="6.75">1.4</option><option value="6.25">1.3</option><option value="5.75">1.2</option><option value="5.25">1.1</option><option value="4.75">1.0</option><option value="4.25">0.9</option><option value="3.75">0.8</option></select>
           <label for="stat3">강수 모스뎀</label>
           <select id="stat3"><option value="0">선택</option><option value="9">1.5%</option><option value="8.5">1.4%</option><option value="8">1.3%</option><option value="7.5">1.2%</option><option value="7">1.1%</option><option value="6.5">1.0%</option><option value="6">0.9%</option><option value="5">0.8%</option></select>
           <label for="stat4">강수 크뎀</label>
@@ -168,13 +202,13 @@
           <label for="stat5">물마공%</label>
           <select id="stat5"><option value="0">선택</option><option value="7">13%</option><option value="6.5">12%</option><option value="6">11%</option><option value="5.5">10%</option><option value="4.5">9%</option><option value="4">8%</option><option value="3.5">7%</option><option value="3">6%</option></select>
           <label for="stat6">물마렙</label>
-          <select id="stat6"><option value="0">선택</option><option value="5.5">13</option><option value="5">12</option><option value="4.5">11</option><option value="4">10</option><option value="3.5">9</option><option value="3">8</option><option value="2.5">7</option><option value="2">6</option></select>
+          <select id="stat6"><option value="0">선택</option><option value="4.75">13</option><option value="4.25">12</option><option value="3.75">11</option><option value="3.25">10</option><option value="2.75">9</option><option value="2.25">8</option><option value="1.75">7</option><option value="1.25">6</option></select>
         </div>
         <div class="column">
           <label for="stat7">타피</label>
           <select id="stat7"><option value="0">선택</option><option value="8">12%</option><option value="7">11%</option><option value="6.5">10%</option><option value="6">9%</option><option value="5">8%</option><option value="4.5">7%</option><option value="4">6%</option><option value="3.5">5%</option></select>
           <label for="stat8">추피</label>
-          <select id="stat8"><option value="0">선택</option><option value="8">12%</option><option value="7">11%</option><option value="6.5">10%</option><option value="6">9%</option><option value="5">8%</option><option value="4.5">7%</option><option value="4">6%</option><option value="4">6%</option><option value="3.5">5%</option></select>
+          <select id="stat8"><option value="0">선택</option><option value="8">12%</option><option value="7">11%</option><option value="6.5">10%</option><option value="6">9%</option><option value="5">8%</option><option value="4.5">7%</option><option value="4">6%</option><option value="3.5">5%</option></select>
           <label for="stat9">강렬/초뎀</label>
           <select id="stat9"><option value="0">선택</option><option value="5">13%</option><option value="4.5">12%</option><option value="4">11%</option><option value="3.5">10%</option><option value="3">9%</option><option value="2.5">8%</option><option value="2">7%</option><option value="1.5">6%</option></select>
           <label for="stat10">모스뎀</label>
@@ -182,8 +216,31 @@
           <label for="stat11">크뎀</label>
           <select id="stat11"><option value="0">선택</option><option value="5.5">13%</option><option value="5">12%</option><option value="4.5">11%</option><option value="4">10%</option><option value="3.5">9%</option><option value="3">8%</option><option value="2.5">7%</option><option value="2">6%</option></select>
           <label for="stat12">보뎀</label>
-          <select id="stat12"><option value="0">선택</option><option value="5">15%</option><option value="4.5">14%</option><option value="4">13%</option><option value="3.5">12%</option><option value="3">11%</option><option value="2">10%</option><option value="2">9%</option><option value="1.5">8%</option></select>
+          <select id="stat12"><option value="0">선택</option><option value="5">15%</option><option value="4.5">14%</option><option value="4">13%</option><option value="3.5">12%</option><option value="3">11%</option><option value="2">10%</option><option value="1.5">8%</option></select>
         </div>
+      </div>
+
+      <!-- 오른쪽 정보 섹션 -->
+      <div class="info-section">
+        <h3>스탯 절댓값 변옵 순위</h3>
+        <ul>
+          <li><span class="highlight-red">1순위: 물마공%</span></li>
+          <li><span class="highlight-red">2순위: 추피 / 타피</span></li>
+          <li>3순위: 모스뎀</li>
+          <li>4순위: 초월/강렬, 크뎀</li>
+          <li>5순위: 보뎀 ≥ 물마렙</li>
+        </ul>
+
+<h3>강수일 경우</h3>
+<ul>
+  <li><span class="highlight-red">1순위: 물마공강수%</span></li>
+  <li><span class="highlight-red">2순위: 모스뎀강수</span></li>
+  <li><span class="highlight-red">3순위: 추피 / 타피</span></li>
+  <li>4순위: 크뎀강수</span></li>
+  <li>5순위: 물마렙강수</span></li>
+  <li>6순위: 초월/강렬, 보뎀</li>
+</ul>
+
       </div>
     </div>
 
@@ -210,7 +267,7 @@
     if (score100 >= 86) return "점수: " + score100 + "점\n등급: 돈까스권 평생";
     if (score100 >= 70) return "점수: " + score100 + "점\n등급: 주절먹 (모듈작 무조건)";
     if (score100 >= 50) return "점수: " + score100 + "점\n등급: 현실적인 엔드(모듈작 추천)";
-    return "점수: " + score100 + "점\n등급: 돌려";
+    return "점수: " + score100 + "점\n등급: 망설이지말고 돌려";
   }
 
   function toggleAccordion(id) {
